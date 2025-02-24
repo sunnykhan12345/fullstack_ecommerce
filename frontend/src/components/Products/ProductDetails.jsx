@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 const ProductDetails = () => {
-  const [size, setSizes] = useState(true);
-  const selectSize = () => {
-    setSizes(!size);
-  };
+  const [selectsize, setSelectSize] = useState("");
+  const [selectColor, setSelectColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+
   const selectProduct = [
     {
       name: "Stylish Jacket",
@@ -27,6 +29,24 @@ const ProductDetails = () => {
       ],
     },
   ];
+
+  const handleAddToggle = () => {
+    if (!selectsize || !selectColor) {
+      toast.error("Please select size and color before adding to cart", {
+        duration: 1000,
+      });
+      return;
+    }
+
+    setIsButtonDisable(true);
+
+    setTimeout(() => {
+      toast.success("Product added to cart", {
+        duration: 1000,
+      });
+      setIsButtonDisable(false);
+    }, 1000);
+  };
 
   const [mainImage, setMainImage] = useState(selectProduct[0].images[0].url);
 
@@ -92,8 +112,13 @@ const ProductDetails = () => {
               <div className="flex gap-2 mt-2">
                 {selectProduct[0]?.colors.map((color) => (
                   <button
+                    onClick={() => setSelectColor(color)}
                     key={color}
-                    className="w-8 h-8 rounded-full border"
+                    className={`w-8 h-8 rounded-full border cursor-pointer ${
+                      selectColor === color
+                        ? "border-4  border-black"
+                        : "border-gray-300"
+                    }`}
                     style={{
                       backgroundColor: color.toLowerCase(),
                       filter: "brightness(0.8)",
@@ -108,10 +133,10 @@ const ProductDetails = () => {
               <div className="flex gap-2 mt-2">
                 {selectProduct[0]?.sizes.map((size) => (
                   <button
-                    onClick={selectSize}
+                    onClick={() => setSelectSize(size)}
                     key={size}
                     className={`px-4 py-2 cursor-pointer hover:bg-gray-200 transition-all duration-300 rounded border ${
-                      size ? "bg-black text-white" : "bg-white"
+                      selectsize === size ? "bg-black text-white" : "bg-white"
                     }`}
                   >
                     {size}
@@ -119,9 +144,36 @@ const ProductDetails = () => {
                 ))}
               </div>
             </div>
+            {/* quanuty */}
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  onClick={() => setQuantity(quantity - 1)}
+                  className="bg-white hover:opacity-65 border border-gray-400 px-2 py-0.5 rounded cursor-pointer"
+                >
+                  -
+                </button>
+                <span>{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="bg-white border hover:opacity-65 border-gray-400 px-2 py-0.5 rounded cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
+            </div>
             {/* Add to Cart Button */}
-            <button className="bg-black text-white py-2 px-6 rounded w-full mb-4 transition-all duration-300 hover:opacity-80 cursor-pointer">
-              ADD TO CART
+            <button
+              onClick={handleAddToggle}
+              disabled={isButtonDisable}
+              className={`bg-black text-white py-2 px-6 rounded w-full mb-4 transition-all duration-300 hover:opacity-80 cursor-pointer
+                 ${
+                   isButtonDisable
+                     ? "cursor-not-allowed opacity-50"
+                     : " hover:bg-gray-900"
+                 }`}
+            >
+              {isButtonDisable ? "Adding..." : "ADD TO CART"}
             </button>
             {/* Product Characteristics */}
             <div className="mt-6 text-gray-700">
