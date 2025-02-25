@@ -4,6 +4,8 @@ import GenderCollection from "../components/Products/GenderCollection";
 import NewArravels from "../components/Products/NewArravels";
 import ProductDetails from "../components/Products/ProductDetails";
 import ProductGrid from "../components/Products/ProductGrid";
+import FeaturedCollection from "../components/Products/FeaturedCollection";
+import FeaturesSection from "../components/Products/FeaturesSection";
 
 const placeholderProducts = [
   {
@@ -46,6 +48,46 @@ const placeholderProducts = [
       },
     ],
   },
+  {
+    _id: 5,
+    name: "product 4",
+    price: 100,
+    images: [
+      {
+        url: "https://img.drz.lazcdn.com/static/pk/p/5bf9d963b7c9c704b230861e866c9af2.jpg_400x400q75.jpg_.webp",
+      },
+    ],
+  },
+  {
+    _id: 6,
+    name: "product 4",
+    price: 100,
+    images: [
+      {
+        url: "https://img.drz.lazcdn.com/static/pk/p/5bf9d963b7c9c704b230861e866c9af2.jpg_400x400q75.jpg_.webp",
+      },
+    ],
+  },
+  {
+    _id: 7,
+    name: "product 4",
+    price: 100,
+    images: [
+      {
+        url: "https://img.drz.lazcdn.com/static/pk/p/5bf9d963b7c9c704b230861e866c9af2.jpg_400x400q75.jpg_.webp",
+      },
+    ],
+  },
+  {
+    _id: 8,
+    name: "product 4",
+    price: 100,
+    images: [
+      {
+        url: "https://img.drz.lazcdn.com/static/pk/p/5bf9d963b7c9c704b230861e866c9af2.jpg_400x400q75.jpg_.webp",
+      },
+    ],
+  },
 ];
 
 const Home = () => {
@@ -61,6 +103,8 @@ const Home = () => {
         <h2 className="text-3xl text-center font-bold mb-4">Top Wears Women</h2>
         <ProductGrid product={placeholderProducts} />
       </div>
+      <FeaturedCollection />
+      <FeaturesSection />
     </div>
   );
 };
