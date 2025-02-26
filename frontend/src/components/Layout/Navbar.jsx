@@ -122,7 +122,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Link to="/profile" className="hover:text-black">
+          <Link to="/login" className="hover:text-black">
             <CiUser />
           </Link>
           <button
