@@ -122,8 +122,8 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Link to="/login" className="hover:text-black">
-            <CiUser />
+          <Link to="/profile" className="hover:text-black">
+            <CiUser className="text-2xl" />
           </Link>
           <button
             onClick={toggleCartDrawer}
@@ -136,7 +136,7 @@ const Navbar = () => {
           </button>
 
           {/* Search */}
-          <SearchBar />
+          <SearchBar className="text-3xl" />
 
           {/* Mobile Menu Button */}
           <button onClick={toggleNavDrawer} className="md:hidden">

@@ -60,10 +60,10 @@ const Register = () => {
             </button>
           </form>
           <p className="pt-6 text-center text-sm">
-            don't have am account?
+            already have a account
             <Link to="/login" className="text-blue-400">
               {" "}
-              register
+              login
             </Link>
           </p>
         </div>
