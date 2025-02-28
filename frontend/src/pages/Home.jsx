@@ -6,6 +6,7 @@ import ProductDetails from "../components/Products/ProductDetails";
 import ProductGrid from "../components/Products/ProductGrid";
 import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
+import Cart from "../components/Products/Cart";
 
 const placeholderProducts = [
   {
@@ -54,7 +55,7 @@ const placeholderProducts = [
     price: 100,
     images: [
       {
-        url: "https://img.drz.lazcdn.com/static/pk/p/5bf9d963b7c9c704b230861e866c9af2.jpg_400x400q75.jpg_.webp",
+        url: "https://img.drz.lazcdn.com/static/pk/p/a31f6de9f4af30d0f017510b019041ae.jpg_400x400q75.jpg_.webp",
       },
     ],
   },
@@ -74,7 +75,7 @@ const placeholderProducts = [
     price: 100,
     images: [
       {
-        url: "https://img.drz.lazcdn.com/static/pk/p/5bf9d963b7c9c704b230861e866c9af2.jpg_400x400q75.jpg_.webp",
+        url: "https://img.drz.lazcdn.com/static/pk/p/51869b46155bf0e1900b692c44eb5609.jpg_400x400q75.jpg_.webp",
       },
     ],
   },
@@ -84,7 +85,7 @@ const placeholderProducts = [
     price: 100,
     images: [
       {
-        url: "https://img.drz.lazcdn.com/static/pk/p/5bf9d963b7c9c704b230861e866c9af2.jpg_400x400q75.jpg_.webp",
+        url: "https://img.drz.lazcdn.com/static/pk/p/66bd9e4348b35fb10560fa67c9fee655.jpg_400x400q75.jpg_.webp",
       },
     ],
   },
@@ -105,6 +106,7 @@ const Home = () => {
       </div>
       <FeaturedCollection />
       <FeaturesSection />
+      {/* <Cart /> */}
     </div>
   );
 };

@@ -96,7 +96,7 @@ const Navbar = () => {
         {/* Navigation links */}
         <div className="hidden md:flex space-x-6">
           <Link
-            to="/men"
+            to="/collections/all"
             className="text-gray-700 hover:text-black text-sm uppercase"
           >
             Men
