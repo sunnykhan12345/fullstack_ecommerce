@@ -90,7 +90,7 @@ const Navbar = () => {
     <div className="bg-slate-100 py-5 border-b border-gray-200">
       <div className="md:container mx-auto flex justify-between items-center px-6">
         <div>
-          <Link to="/">Rabbit</Link>
+          <Link to="/" className="hover:underline">Sunny</Link>
         </div>
 
         {/* Navigation links */}

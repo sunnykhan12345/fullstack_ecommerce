@@ -8,6 +8,7 @@ import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
 import Cart from "../components/Products/Cart";
 
+
 const placeholderProducts = [
   {
     _id: 1,
