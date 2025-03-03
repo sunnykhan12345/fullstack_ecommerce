@@ -5,10 +5,11 @@ const monggoose = require("mongoose")
 const ConnectDB = () =>{
     try{
         monggoose.connect(process.env.MONGO_URI)
-        console.log("db is connected...")
+        console.log("MongogDb Connectd Successfully!")
     }
     catch(err) {
-        console.log("db is not connected !", err)
+        console.log("MongoDb cnnection Failed!", err)
+        process.exit(1)
     }
 }
 

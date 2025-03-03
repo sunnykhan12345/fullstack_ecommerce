@@ -1,16 +1,48 @@
+// const express = require("express");
+// const cors = require("cors");
+// require("dotenv").config();
+// const connectDB = require("./config/db.js");
+// const userRouter = require("./routes/UserRouter.jsx");
+// const app = express();
+// app.use(express.json());
+// app.use(cors());
+
+// const PORT = process.env.PORT || 5000;
+// connectDB();
+// app.get("/", (req, res) => {
+//   res.send("welcome to e commerce api projects ");
+// });
+
+// // call api router
+
+// app.use("/api/users", userRouter);
+// app.listen(PORT, () => {
+//   console.log(`server is running on port ${PORT}`);
+// });
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const dotenv = require("dotenv");
 const connectDB = require("./config/db.js");
+const userRouter = require("./routes/UserRouter.jsx");
+
+dotenv.config();
 const app = express();
+
 app.use(express.json());
 app.use(cors());
 
-const PORT = process.env.PORT || 5000;
 connectDB();
+
+const PORT = process.env.PORT || 5000;
+
+
+
 app.get("/", (req, res) => {
-  res.send("welcome to e commerce api projects ");
+  res.send("Welcome to E-commerce API Project");
 });
+
+app.use("/api/users", userRouter); // Check path and file case carefully
+
 app.listen(PORT, () => {
-  console.log(`server is running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

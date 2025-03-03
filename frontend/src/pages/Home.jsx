@@ -8,7 +8,7 @@ import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
 import Cart from "../components/Products/Cart";
 
-
+import FileList from "../components/FileList";
 const placeholderProducts = [
   {
     _id: 1,
@@ -107,6 +107,7 @@ const Home = () => {
       </div>
       <FeaturedCollection />
       <FeaturesSection />
+      <FileList/>
       {/* <Cart /> */}
     </div>
   );
