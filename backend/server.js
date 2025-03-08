@@ -24,6 +24,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.js");
 const userRouter = require("./routes/UserRouter.jsx");
+// const productRouter = require("./routes/productRoutes.js");
+const productRoutes = require("./routes/productRoutes.jsx")
 
 dotenv.config();
 const app = express();
@@ -35,13 +37,12 @@ connectDB();
 
 const PORT = process.env.PORT || 5000;
 
-
-
 app.get("/", (req, res) => {
   res.send("Welcome to E-commerce API Project");
 });
 
-app.use("/api/users", userRouter); // Check path and file case carefully
+app.use("/api/users", userRouter);
+app.use("/api/products", productRoutes);
 
 app.listen(PORT, () => {
   console.log(` Server running on port ${PORT}`);

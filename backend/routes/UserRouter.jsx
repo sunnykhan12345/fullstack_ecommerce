@@ -29,7 +29,7 @@ router.post("/register", async (req, res) => {
 
     // Synchronous token creation (cleaner than callback version)
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "40h",
+      expiresIn: "7d",
     });
 
     // ✅ Return user + token in response
@@ -52,13 +52,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    // Find the user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    // Check password match
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
@@ -90,7 +88,7 @@ router.post("/login", async (req, res) => {
 // profile api for protect
 
 router.get("/profile", protect, async (req, res) => {
-  res.json(req.user);
+  res.json({ user: req.header });
 });
 
 module.exports = router;
