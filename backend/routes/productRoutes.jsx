@@ -1,126 +1,66 @@
-// const express = require("express");
-// const Product = require("../models/Product");
-// // const {protect} = require("../middleware/authMiddleware.js");
-
-// const router = express.Router();
-// // @route POST /api/products
-// // @desc Create a new product
-// // @access private/Admin
-// router.post("/", async (req, res) => {
-//   try {
-//     const {
-//       name,
-//       description,
-//       price,
-//       discountPrice,
-//       countInStock,
-//       category,
-//       brand,
-//       sizes,
-//       colors,
-//       collections,
-//       material,
-//       gender,
-//       images,
-//       isFeatured,
-//       isPublished,
-//       tags,
-//       dimensions,
-//       weight,
-//       sku,
-//     } = req.body;
-
-//     const product = new Product({
-//       name,
-//       description,
-//       price,
-//       discountPrice,
-//       countInStock,
-//       category,
-//       brand,
-//       sizes,
-//       colors,
-//       collections,
-//       material,
-//       gender,
-//       images,
-//       isFeatured,
-//       isPublished,
-//       tags,
-//       dimensions,
-//       weight,
-//       sku,
-//       user: req.user.id,
-//     });
-//     const createProduct = await product.save();
-//     res.status(201).json(createProduct);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("Server Errors");
-//   }
-// });
-// module.exports = router;
 const express = require("express");
 const Product = require("../models/Product");
-// const { protect } = require("../middleware/authMiddleware.js"); // Ensure this is correct
+const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 // @route POST /api/products
 // @desc Create a new product
 // @access private/Admin
-router.post("/", async (req, res) => {
+router.post("/", protect, async (req, res) => {
   try {
-    const {
-      name,
-      description,
-      price,
-      discountPrice,
-      countInStock,
-      category,
-      brand,
-      sizes,
-      colors,
-      collections,
-      material,
-      gender,
-      images,
-      isFeatured,
-      isPublished,
-      tags,
-      dimensions,
-      weight,
-      sku,
-    } = req.body;
+    const { sku } = req.body;
+
+    // Check if a product with the same SKU already exists
+    const existingProduct = await Product.findOne({ sku });
+
+    if (existingProduct) {
+      return res
+        .status(400)
+        .json({ message: "SKU already exists. Use a unique SKU." });
+    }
 
     const product = new Product({
-      name,
-      description,
-      price,
-      discountPrice,
-      countInStock,
-      category,
-      brand,
-      sizes,
-      colors,
-      collections,
-      material,
-      gender,
-      images,
-      isFeatured,
-      isPublished,
-      tags,
-      dimensions,
-      weight,
-      sku,
-      // user: req.user.id, // Ensure `req.user` is attached by `protect`
+      ...req.body,
+      user: req.user._id, // Ensure req.user is set properly
     });
 
-    const createProduct = await product.save();
-    res.status(201).json(createProduct);
+    const createdProduct = await product.save();
+    res.status(201).json(createdProduct);
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Server Error");
+    console.error("Error creating product:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+// @route PUT /api/products/:id
+// @desc Update a product
+// @access private/Admin
+
+// @route PUT /api/products/:id
+// @desc Update a product
+// @access private/Admin
+router.put("/:id", protect, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Check if the product exists
+    let product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Update the product fields
+    product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true, // Return the updated document
+      runValidators: true, // Ensure data validation
+    });
+
+    res.status(200).json(product);
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Server Error" });
   }
 });
 

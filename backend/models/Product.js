@@ -29,6 +29,10 @@ const productSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     metaTitle: { type: String },
     metaDescription: { type: String },
+    role: {
+      type: String,
+      enum: ["customer"],
+    },
     dimensions: {
       // ✅ Fixed Typo
       length: Number,
