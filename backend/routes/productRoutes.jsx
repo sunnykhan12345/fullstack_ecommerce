@@ -83,4 +83,107 @@ router.delete("/:id", protect, async (req, res) => {
   }
 });
 
+// @route GET /api/products
+// @desc GET all product with optional query filters
+// @access public
+
+router.get("/", async (req, res) => {
+  try {
+    const {
+      collection,
+      size,
+      gender,
+      minPrice,
+      maxPrice, // Fixed typo
+      sortBy,
+      search,
+      category,
+      material,
+      brand,
+      color,
+      limit,
+    } = req.query;
+
+    let query = {};
+
+    // Filter logic
+    if (collection && collection.toLowerCase() !== "all") {
+      query.collection = collection;
+    }
+    if (category && category.toLowerCase() !== "all") {
+      query.category = category;
+    }
+    if (material) {
+      query.material = { $in: material.split(",") };
+    }
+    if (brand) {
+      query.brand = { $in: brand.split(",") };
+    }
+    if (size) {
+      query.size = { $in: size.split(",") };
+    }
+    if (color) {
+      query.colors = { $in: [color] };
+    }
+    if (gender) {
+      query.gender = gender;
+    }
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) query.price.$gte = Number(minPrice);
+      if (maxPrice) query.price.$lte = Number(maxPrice);
+    }
+
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    let sort = {};
+    if (sortBy) {
+      switch (sortBy) {
+        case "priceAsc":
+          sort = { price: 1 };
+          break;
+        case "priceDesc":
+          sort = { price: -1 };
+          break;
+        case "popularity":
+          sort = { rating: -1 };
+          break;
+        default:
+          break;
+      }
+    }
+
+    // Fetch data from MongoDB collection (Assuming `Product` is your model)
+    const products = await Product.find(query)
+      .sort(sort)
+      .limit(Number(limit) || 0);
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+// @route GET /api/products/:id
+// @desc GET a single product by ID
+// @access public
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id); // Use 'Product' instead of 'product'
+
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: "Product Not Found" });
+    }
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
