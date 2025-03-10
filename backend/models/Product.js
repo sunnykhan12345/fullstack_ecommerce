@@ -6,12 +6,16 @@ const productSchema = new mongoose.Schema(
     description: { type: String, required: true },
     price: { type: Number, required: true },
     discountPrice: { type: Number },
-    colors: [{ type: String, required: true }], // ✅ Fixed
+    colors: [{ type: String, required: true }],
     countInStock: { type: Number, required: true, default: 0 },
     sku: { type: String, unique: true, required: true },
     category: { type: String, required: true },
     brand: { type: String },
     sizes: { type: [String], required: true },
+    colors: [
+      { type: String, enum: ["White", "Black", "Green"], required: true },
+    ],
+
     collections: { type: String, required: true },
     material: { type: String },
     gender: { type: String, enum: ["Men", "Women", "Unisex"] },
