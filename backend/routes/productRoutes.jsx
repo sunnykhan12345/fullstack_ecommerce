@@ -185,5 +185,11 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+// @route GET /api/products/similar/:id
+// @desc Review similar products based on the current products's gender and category
+// @access public
+router.get("/similar/:id", async(req,res) =>{
+  const{id} = req.params
+})
 
 module.exports = router;
