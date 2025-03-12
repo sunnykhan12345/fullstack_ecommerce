@@ -188,8 +188,51 @@ router.get("/:id", async (req, res) => {
 // @route GET /api/products/similar/:id
 // @desc Review similar products based on the current products's gender and category
 // @access public
-router.get("/similar/:id", async(req,res) =>{
-  const{id} = req.params
+// router.get("/similar/:id", async(req,res) =>{
+//   const{id} = req.params
+// })
+router.get("/similar/:id", async (req, res) => {
+  const { id } = req.params; // Extracting ID from URL
+  try {
+    const product = await Product.findById(id); // ✅ Use Product instead of product
+    console.log("Requested Product ID:", id);
+
+    console.log("Found Product:", product);
+    if (!product) {
+      return res.status(404).json({ message: "Product Not Found!" });
+    }
+
+    const similarProduct = await Product.find({
+      _id: { $ne: id },
+      gender: product.gender,
+      category: product.category,
+    }).limit(4);
+
+    res.json(similarProduct);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// @route GET /api/products/best-seller
+// @desc Review similar products with the heighesr rating
+// @access public
+
+router.get("/best-seller", async(req,res) =>{
+  try{
+    const bestSeller = await Product.findOne().sort({rating: -1})
+    if(bestSeller){
+      res.json(bestSeller)
+    }else{
+      res.status(404).json({message:"Not Best Seller Found !"})
+    }
+  }
+
+  catch(error){
+    console.log(error)
+    res.status(500).json({message:"Internal Server Error"})
+  }
 })
 
 module.exports = router;
