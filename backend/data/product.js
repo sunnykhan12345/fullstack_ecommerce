@@ -1170,8 +1170,43 @@ const products = [
     dimensions: { length: 28, width: 18, height: 2 }, // Added
     weight: 0.4, // Added
   },
-
   // Repeat similar adjustments for all other products...
+  {
+    name: "Slim-Fit Easy-Iron Shirt man",
+    description:
+      "A slim-fit, easy-iron shirt in woven cotton fabric with a fitted silhouette. Features a turn-down collar, classic button placket, and a yoke at the back. Long sleeves and adjustable button cuffs with a rounded hem. man",
+    price: 10.99,
+    discountPrice: 22.99,
+    countInStock: 20,
+    sku: "SLIM-EIR-005 Man",
+    category: "Top Wear",
+    brand: "Urban Chic Nice",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["White", "Black"], // Adjusted to match enum
+    collections: "Business Wear Man",
+    material: "Cottons",
+    gender: "Men",
+    images: [
+      {
+        url: "https://picsum.photos/500/500?random=47",
+        altText: "Slim-Fit Easy-Iron Shirt Front View",
+      },
+      {
+        url: "https://picsum.photos/500/500?random=2",
+        altText: "Slim-Fit Easy-Iron Shirt Front View",
+      },
+    ],
+    rating: 4,
+    numReviews: 12,
+    isFeatured: false, // Added
+    isPublished: true, // Added
+    tags: ["shirt", "slim-fit", "business"], // Added
+    user: "65f8c1b2e4b0f3a9c8f1b2e4", // Placeholder ObjectId
+    metaTitle: "Slim-Fit Easy-Iron Shirt", // Added
+    metaDescription: "A slim-fit, easy-iron shirt for business wear.", // Added
+    dimensions: { length: 28, width: 18, height: 2 }, // Added
+    weight: 0.4, // Added
+  },
 ];
 
 module.exports = products;

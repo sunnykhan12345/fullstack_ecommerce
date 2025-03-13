@@ -33,6 +33,39 @@ router.post("/", protect, async (req, res) => {
   }
 });
 
+// @route GET /api/products/best-seller
+// @desc Review similar products with the heighesr rating
+// @access public
+router.get("/best-seller", async(req,res) =>{
+  try{
+    const bestSeller = await Product.findOne().sort({rating: -1})
+    if(bestSeller){
+      res.json(bestSeller)
+    }else{
+      res.status(404).json({message:"Not Best Seller Found !"})
+    }
+  }
+
+  catch(error){
+    console.log(error)
+    res.status(500).json({message:"Internal Server Error"})
+  }
+})
+
+// @route GET /api/products/new-arriyals
+// @desc Review latest 8 products creation date
+// @access public
+router.get("/new-arriyals", async(req,res) =>{
+  try{
+    const newArriyals = await Product.find().sort({rating: -1}).limit(8)
+         res.json(newArriyals)     
+    }
+  catch(error){
+    console.log(error)
+    res.status(500).json({message:"Internal Server Error"})
+  }
+})
+
 // @route PUT /api/products/:id
 // @desc Update a product
 // @access private/Admin
@@ -82,6 +115,7 @@ router.delete("/:id", protect, async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+
 
 // @route GET /api/products
 // @desc GET all product with optional query filters
@@ -215,24 +249,6 @@ router.get("/similar/:id", async (req, res) => {
   }
 });
 
-// @route GET /api/products/best-seller
-// @desc Review similar products with the heighesr rating
-// @access public
 
-router.get("/best-seller", async(req,res) =>{
-  try{
-    const bestSeller = await Product.findOne().sort({rating: -1})
-    if(bestSeller){
-      res.json(bestSeller)
-    }else{
-      res.status(404).json({message:"Not Best Seller Found !"})
-    }
-  }
-
-  catch(error){
-    console.log(error)
-    res.status(500).json({message:"Internal Server Error"})
-  }
-})
 
 module.exports = router;
